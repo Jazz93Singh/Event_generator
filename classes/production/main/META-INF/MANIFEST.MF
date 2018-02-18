@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: Server_CEP/src/main/java/org/carleton/ServerCEP/Merge_and_CEP.java
+
+
