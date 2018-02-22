@@ -1,2 +1,2 @@
 Manifest-Version: 1.0
-Main-Class: org.carleton.mobile.Send_to_Kafka_and_Timekeeper
+Main-Class: org.carleton.generator.sensors.start_sensors

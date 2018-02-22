@@ -1,10 +1,11 @@
 package org.carleton.generator.event;
 
 
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.flink.streaming.api.functions.source.RichParallelSourceFunction;
 
+import java.time.ZonedDateTime;
 import java.util.Random;
+import java.sql.Timestamp;
 
 
 public class EventGenerator extends RichParallelSourceFunction<Event> {
@@ -46,8 +47,8 @@ public class EventGenerator extends RichParallelSourceFunction<Event> {
 
 
 
-        Long start_time = System.currentTimeMillis();
-        Long end_time = start_time + 1000 * time_in_sec;
+        Long start_time =  System.currentTimeMillis();
+        Long end_time = start_time + (1000 * time_in_sec);
 
 
         while (System.currentTimeMillis() < end_time ){
@@ -77,6 +78,7 @@ public class EventGenerator extends RichParallelSourceFunction<Event> {
             }
 
             Thread.sleep(Sleeptime);
+
 
 
         }

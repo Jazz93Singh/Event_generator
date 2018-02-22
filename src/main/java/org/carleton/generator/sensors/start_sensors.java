@@ -1,12 +1,5 @@
 package org.carleton.generator.sensors;
 
-import org.apache.commons.lang3.ObjectUtils;
-import org.carleton.generator.event.Event;
-import org.carleton.generator.event.EventGenerator;
-import org.carleton.generator.event.EventGenerator_simple;
-
-import static org.apache.commons.lang3.ObjectUtils.*;
-
 public class start_sensors {
 
     public static void main(String[] args) throws Exception {
@@ -14,6 +7,7 @@ public class start_sensors {
         sensor1 sensor1 = null;
         sensor2 sensor2 = null;
         sensor3 sensor3 = null;
+        sensor4 sensor4 = null;
 
 
         Thread thread1 = new Thread() {
@@ -25,9 +19,6 @@ public class start_sensors {
                     sensor1.main(null);
                 } catch (Exception e) {
                     e.printStackTrace();
-
-
-
                 }
             }
         };
@@ -59,10 +50,26 @@ public class start_sensors {
         };
 
 
+        Thread thread4 = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    sensor4.main(null);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+
+
+
+
         thread1.start();
         thread2.start();
         thread3.start();
-
+//        thread4.start();
 
 
     } //main

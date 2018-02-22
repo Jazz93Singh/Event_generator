@@ -25,6 +25,7 @@
 
     <dependencies>
 
+
         <!-- loggers related-->
 
 
@@ -34,6 +35,16 @@
             <version>${log4j.version}</version>
 
         </dependency>
+
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+
+        </dependency>
+
+
 
 
         <!-- Streaming related-->
@@ -77,6 +88,13 @@
             <version>3.21.0.1</version>
         </dependency>
 
+
+        <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-metrics-slf4j -->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-metrics-slf4j</artifactId>
+            <version>1.4.1</version>
+        </dependency>
 
     </dependencies>
 

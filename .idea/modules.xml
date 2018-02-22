@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/cep-monitoring.iml" filepath="$PROJECT_DIR$/cep-monitoring.iml" />
       <module fileurl="file://$PROJECT_DIR$/src/main/main.iml" filepath="$PROJECT_DIR$/src/main/main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mobile_CEP.iml" filepath="$PROJECT_DIR$/mobile_CEP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/patient.iml" filepath="$PROJECT_DIR$/patient.iml" />
     </modules>
   </component>
 </project>
