@@ -9,13 +9,12 @@ import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSink;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.carleton.generator.event.Event;
-import org.carleton.generator.event.EventGenerator;
+import org.carleton.generator.event.stream_event;
+import org.carleton.generator.generators.EventGenerator_bp;
+import org.carleton.generator.variables.Constants;
 
-import java.util.Properties;
 
-
-public class sensor2 {
+public class bp_sensor {
 
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -33,37 +32,25 @@ public class sensor2 {
         Constants constants = null;
 
 
-        // ip of server where data needs to be sent
-        String KafkaIP = "localhost";
-
-        //setting kafka properties {setting this properties after env will led to error, it must be difined in begining}
-        Properties properties = new Properties();
-        properties.setProperty("bootstrap.servers", KafkaIP+":9092");
-        properties.setProperty("zookeeper.connect", KafkaIP+":2181");
-        properties.setProperty("group.id", "test");
-
-
         //setting the envrionment variable as StreamExecutionEnvironment
         StreamExecutionEnvironment envrionment = StreamExecutionEnvironment.getExecutionEnvironment();
 
         envrionment.setParallelism(1);
 
 
-
-        DataStream<Event> stream1  = envrionment
-                .addSource(new EventGenerator(constants.sensor2_data_rate,constants.sensor2_run_time_sec,1,2,constants.sensor2_lowerbound,
-                        constants.sensor2_UpperBound ))
-                .name("stream 2")
+        DataStream<stream_event> bp_stream  = envrionment
+                .addSource(new EventGenerator_bp(constants.bp_data_rate,constants.bp_run_time_sec,1,2))
+                .name("BP stream")
                 .setParallelism(1);
 
-        System.out.println("");
 
 
         //Sending the stream to timekeeper
-        stream1.map(new RichMapFunction<Event, String>() {
+        bp_stream.map(new RichMapFunction<stream_event, String>() {
             @Override
-            public String map(Event event) throws Exception {
+            public String map(stream_event event) throws Exception {
                 String tuple = event.toString();
+                System.out.println(tuple);
                 return tuple + "\n";
             }
         }).writeToSocket(constants.timekeeper_ip, 8002, new SimpleStringSchema() );
@@ -71,7 +58,7 @@ public class sensor2 {
 
 
         // Sending the stream to mobile phone
-        DataStreamSink<String> total_tuples = stream1.map(new RichMapFunction<Event, String>() {
+        DataStreamSink<String> total_tuples = bp_stream.map(new RichMapFunction<stream_event, String>() {
 
             IntCounter Sensor2_tuple_count;
 
@@ -82,12 +69,12 @@ public class sensor2 {
             }
 
             @Override
-            public String map(Event event) throws Exception {
+            public String map(stream_event event) throws Exception {
                 String tuple = event.toString();
                 Sensor2_tuple_count.add(1);
 
                 System.lineSeparator();
-                System.out.print(ANSI_PURPLE + " \r  sensor 2 count =" + Sensor2_tuple_count);
+                System.out.print(ANSI_PURPLE + " \r  BP Sensor count =" + Sensor2_tuple_count);
                 System.out.flush();
 
 //              System.out.println(ANSI_BLUE + tuple);
@@ -95,9 +82,6 @@ public class sensor2 {
                 return tuple + "\n";
             }
         }).writeToSocket(constants.mobile_ip, 7002, new SimpleStringSchema() );
-//
-
-
 
 
 
@@ -106,12 +90,12 @@ public class sensor2 {
         JobExecutionResult executionResult = envrionment.execute();
 
         Integer number_of_tuples = (Integer) executionResult.getAllAccumulatorResults().get("total_tuples");
-        int input_rate = number_of_tuples/constants.sensor1_run_time_sec;
+        int input_rate = number_of_tuples/constants.bp_run_time_sec;
 
         System.out.println("\n");
-        System.out.println(ANSI_BLUE + "  Expected Input rate of sensor 2    = " + constants.sensor1_data_rate + " tuples/second");
-        System.out.println(ANSI_RED + "  Actual Input rate of sensor 2      = " + input_rate + " tuples/second");
-        System.out.println(ANSI_PURPLE + "  Total # of tuples sent by sensor 2 = " + number_of_tuples );
+        System.out.println(ANSI_BLUE + "  Expected Input rate of BP Sensor     = " + constants.bp_data_rate + " tuples/second");
+        System.out.println(ANSI_RED + "  Actual Input rate of BP Sensor        = " + input_rate + " tuples/second");
+        System.out.println(ANSI_PURPLE + "  Total # of tuples sent by BP Sensor= " + number_of_tuples );
 
 
 

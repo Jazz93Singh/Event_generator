@@ -4,10 +4,10 @@ public class start_sensors {
 
     public static void main(String[] args) throws Exception {
 
-        sensor1 sensor1 = null;
-        sensor2 sensor2 = null;
-        sensor3 sensor3 = null;
-        sensor4 sensor4 = null;
+        ecg_sensor ecg_sensor = null;
+        bp_sensor bp_sensor = null;
+        respiration_sensor respiration_sensor = null;
+        eeg_sensor eeg_sensor = null;
 
 
         Thread thread1 = new Thread() {
@@ -16,7 +16,7 @@ public class start_sensors {
             public void run() {
                 try {
 
-                    sensor1.main(null);
+                    ecg_sensor.main(null);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -29,7 +29,7 @@ public class start_sensors {
             @Override
             public void run() {
                 try {
-                    sensor2.main(null);
+                    bp_sensor.main(null);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -42,7 +42,7 @@ public class start_sensors {
             @Override
             public void run() {
                 try {
-                    sensor3.main(null);
+                    respiration_sensor.main(null);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -55,7 +55,7 @@ public class start_sensors {
             @Override
             public void run() {
                 try {
-                    sensor4.main(null);
+                    eeg_sensor.main(null);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
